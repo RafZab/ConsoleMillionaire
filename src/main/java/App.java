@@ -1,22 +1,28 @@
+import Service.GameSerive;
 import Service.QuestionService;
+import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.gui2.*;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogBuilder;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogButton;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import org.ietf.jgss.GSSContext;
 
 import java.io.Console;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class App {
     private Window window;
     private WindowBasedTextGUI textGUI;
-    private QuestionService questionService = new QuestionService();
+    private GameSerive gameSerive = new GameSerive();
     Screen screen;
 
-    void welcomeDialog() {
+    private int questionCount = 0;
+
+    private void welcomeDialog() {
         new MessageDialogBuilder()
                 .setTitle("Welcome")
                 .setText("Welcome in Millionaire Quiz!")
@@ -25,7 +31,7 @@ public class App {
                 .showDialog(textGUI);
     }
 
-    void setUpWindow() throws IOException {
+    private void setUpWindow() throws IOException {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
 
         screen = terminalFactory.createScreen();
@@ -36,6 +42,10 @@ public class App {
         window = new BasicWindow("Millionaire Quiz");
     }
 
+    private void showLogin() {
+
+    }
+
     private void showMainMenu() {
         window.setHints(Collections.singletonList(Window.Hint.CENTERED));
 
@@ -43,7 +53,7 @@ public class App {
         panel.setLayoutManager(new LinearLayout(Direction.VERTICAL));
 
         Button playButton = new Button("PLAY");
-        //playButton.addListener(button -> playGame());
+        playButton.addListener(button -> playGame());
         panel.addComponent(playButton);
 
         Button statisticsButton = new Button("STATISTICS");
@@ -58,6 +68,36 @@ public class App {
         exitButton.addListener(button -> handleClose());
         panel.addComponent(exitButton);
 
+        window.setComponent(panel);
+    }
+
+    private void playGame(){
+        Panel panel = new Panel();
+
+
+        panel.addComponent(new EmptySpace(new TerminalSize(0, 2)));
+
+        Label questionTitle = new Label("Question number " + (questionCount + 1));
+        panel.addComponent(questionTitle);
+
+        panel.addComponent(new EmptySpace(new TerminalSize(0, 1)));
+
+        Label questionContent = new Label(gameSerive.getQuestion(questionCount));
+        panel.addComponent(questionContent);
+
+        RadioBoxList<String> radioBoxList = new RadioBoxList<>(new TerminalSize(50, 10));
+
+        List<String> answers = gameSerive.getAnswers(questionCount);
+        // shuffle the order answers
+        Collections.shuffle(answers);
+        answers.forEach(radioBoxList::addItem);
+        panel.addComponent(radioBoxList);
+
+        Button submit = new Button("Submit");
+       // submit.addListener(button -> processAnswer(radioBoxList.getCheckedItem()));
+        panel.addComponent(submit);
+
+        window.setHints(Collections.singletonList(Window.Hint.CENTERED));
         window.setComponent(panel);
     }
 
@@ -80,15 +120,20 @@ public class App {
         panel.addComponent(new Label("Incorrect Answer"));
         TextBox incorrectAnswer3 = new TextBox().addTo(panel);
 
-        new Button("SUBMIT", () -> this.handleNewQuestion(question.getText(), correctAnswer.getText(), incorrectAnswer1.getText(), incorrectAnswer2.getText(), incorrectAnswer3.getText())).addTo(panel);
+        panel.addComponent(new Label(""));
 
-        new Button("CLOSE", this::showMainMenu).addTo(panel);
+        Panel panelToButton = new Panel();
+        panelToButton.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
+
+        new Button("SUBMIT", () -> this.handleNewQuestion(question.getText(), correctAnswer.getText(), incorrectAnswer1.getText(), incorrectAnswer2.getText(), incorrectAnswer3.getText())).addTo(panelToButton);
+        new Button("CLOSE", this::showMainMenu).addTo(panelToButton);
+        panel.addComponent(panelToButton);
 
         window.setComponent(panel);
     }
     private void handleNewQuestion(String question, String correctAnswer, String incorrectAnswer1, String incorrectAnswer2, String incorrectAnswer3){
         if(!question.isEmpty() && !correctAnswer.isEmpty() && !incorrectAnswer1.isEmpty() && !incorrectAnswer2.isEmpty() && !incorrectAnswer3.isEmpty()){
-            this.questionService.addQuestion(question, correctAnswer, incorrectAnswer1, incorrectAnswer2, incorrectAnswer3);
+            this.gameSerive.addQuestion(question, correctAnswer, incorrectAnswer1, incorrectAnswer2, incorrectAnswer3);
             new MessageDialogBuilder()
                     .setTitle("Success")
                     .setText("New Question Saved!")

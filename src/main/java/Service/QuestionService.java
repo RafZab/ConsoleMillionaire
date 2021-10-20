@@ -12,9 +12,23 @@ public class QuestionService {
         mockData();
     }
 
+    public ArrayList<String> getAnswers(int numberQuestion){
+        Question question = poolQuestion.get(numberQuestion);
+        return question.getAnswers();
+    }
+
+    public ArrayList<Question> getQuestions() {
+        return poolQuestion;
+    }
+
     public void addQuestion(String question, String correctAnswer, String incorrectAnswer1, String incorrectAnswer2, String incorrectAnswer3){
         Question newQuestion = new Question(question, correctAnswer, incorrectAnswer1, incorrectAnswer2, incorrectAnswer3);
         poolQuestion.add(newQuestion);
+    }
+
+    public String getQuestion(int numberQuestion){
+        Question question = poolQuestion.get(numberQuestion);
+        return  question.getQuestion();
     }
 
     private void mockData(){

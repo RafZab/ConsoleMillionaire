@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class Question {
     private String question;
     private String correctAnswer;
@@ -14,4 +16,22 @@ public class Question {
         this.incorrectAnswer2 = incorrectAnswer2;
         this.incorrectAnswer3 = incorrectAnswer3;
     }
+
+    public String getQuestion(){
+        return this.question;
+    }
+
+    public String getCorrectAnswer(){
+        return this.correctAnswer;
+    }
+
+    public ArrayList<String> getAnswers(){
+        ArrayList<String> result = new ArrayList<>();
+        result.add(this.correctAnswer);
+        result.add(this.incorrectAnswer1);
+        result.add(this.incorrectAnswer2);
+        result.add(this.incorrectAnswer3);
+        return result;
+    }
+
 }
