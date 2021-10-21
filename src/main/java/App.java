@@ -1,6 +1,7 @@
 import Service.GameSerive;
 import Service.QuestionService;
 import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.gui2.*;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogBuilder;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogButton;
@@ -52,6 +53,13 @@ public class App {
         Panel panel = new Panel();
         panel.setLayoutManager(new LinearLayout(Direction.VERTICAL));
 
+        Label smallLogo = new Label("   __  _________   __   ________  _  _____   _______  ____\n" +
+                "  /  |/  /  _/ /  / /  /  _/ __ \\/ |/ / _ | /  _/ _ \\/ __/\n" +
+                " / /|_/ // // /__/ /___/ // /_/ /    / __ |_/ // , _/ _/  \n" +
+                "/_/  /_/___/____/____/___/\\____/_/|_/_/ |_/___/_/|_/___/  \n" +
+                "                                                          ");
+        panel.addComponent(smallLogo);
+
         Button playButton = new Button("PLAY");
         playButton.addListener(button -> playGame());
         panel.addComponent(playButton);
@@ -74,6 +82,16 @@ public class App {
     private void playGame(){
         Panel panel = new Panel();
 
+        panel.addComponent(new EmptySpace(new TerminalSize(0, 1)));
+
+        Label logo = new Label("███╗   ███╗██╗██╗     ██╗     ██╗ ██████╗ ███╗   ██╗ █████╗ ██╗██████╗ ███████╗\n" +
+                "████╗ ████║██║██║     ██║     ██║██╔═══██╗████╗  ██║██╔══██╗██║██╔══██╗██╔════╝\n" +
+                "██╔████╔██║██║██║     ██║     ██║██║   ██║██╔██╗ ██║███████║██║██████╔╝█████╗  \n" +
+                "██║╚██╔╝██║██║██║     ██║     ██║██║   ██║██║╚██╗██║██╔══██║██║██╔══██╗██╔══╝  \n" +
+                "██║ ╚═╝ ██║██║███████╗███████╗██║╚██████╔╝██║ ╚████║██║  ██║██║██║  ██║███████╗\n" +
+                "╚═╝     ╚═╝╚═╝╚══════╝╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚══════╝\n" +
+                "                                                                               ");
+        panel.addComponent(logo);
 
         panel.addComponent(new EmptySpace(new TerminalSize(0, 2)));
 
@@ -93,9 +111,20 @@ public class App {
         answers.forEach(radioBoxList::addItem);
         panel.addComponent(radioBoxList);
 
+        Panel panelToButton = new Panel();
+        panelToButton.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
+
         Button submit = new Button("Submit");
        // submit.addListener(button -> processAnswer(radioBoxList.getCheckedItem()));
-        panel.addComponent(submit);
+        panelToButton.addComponent(submit);
+
+        panelToButton.addComponent(new Label("      "));
+
+        Button end = new Button("End game");
+        // submit.addListener(button -> processAnswer(radioBoxList.getCheckedItem()));
+        panelToButton.addComponent(end);
+
+        panel.addComponent(panelToButton);
 
         window.setHints(Collections.singletonList(Window.Hint.CENTERED));
         window.setComponent(panel);
