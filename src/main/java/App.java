@@ -60,23 +60,52 @@ public class App {
                 "                                                          ");
         panel.addComponent(smallLogo);
 
-        Button playButton = new Button("PLAY");
-        playButton.addListener(button -> playGame());
-        panel.addComponent(playButton);
+        Panel panelPlay = new Panel();
+        panelPlay.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
 
+        panelPlay.addComponent(new Label("                        "));
+        Button playButton = new Button("PLAY");
+        playButton.addListener(button -> startPlayGame());
+        panelPlay.addComponent(playButton);
+
+        panel.addComponent(panelPlay);
+
+        Panel panelStatistics = new Panel();
+        panelStatistics.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
+
+        panelStatistics.addComponent(new Label("                      "));
         Button statisticsButton = new Button("STATISTICS");
         //statisticsButton.addListener(button -> showStatistics());
-        panel.addComponent(statisticsButton);
+        panelStatistics.addComponent(statisticsButton);
 
+        panel.addComponent(panelStatistics);
+
+        Panel panelAddQuestion = new Panel();
+        panelAddQuestion.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
+
+        panelAddQuestion.addComponent(new Label("                     "));
         Button addQuestion = new Button("ADD QUESTION");
         addQuestion.addListener(button -> showAddQuestionForm());
-        panel.addComponent(addQuestion);
+        panelAddQuestion.addComponent(addQuestion);
 
+        panel.addComponent(panelAddQuestion);
+
+        Panel panelClose = new Panel();
+        panelClose.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
+
+        panelClose.addComponent(new Label("                        "));
         Button exitButton = new Button("CLOSE");
         exitButton.addListener(button -> handleClose());
-        panel.addComponent(exitButton);
+        panelClose.addComponent(exitButton);
+
+        panel.addComponent(panelClose);
 
         window.setComponent(panel);
+    }
+
+    private void startPlayGame(){
+        gameSerive.shuffleQuestions();
+        playGame();
     }
 
     private void playGame(){

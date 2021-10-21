@@ -29,4 +29,8 @@ public class GameSerive {
         return questionService.getAnswers(numberQuestion);
     }
 
+    public void shuffleQuestions(){
+        questionService.shuffleQuestions();
+    }
+
 }

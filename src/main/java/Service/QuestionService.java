@@ -3,6 +3,7 @@ package Service;
 import Model.Question;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class QuestionService {
     private ArrayList<Question> poolQuestion;
@@ -31,18 +32,22 @@ public class QuestionService {
         return  question.getQuestion();
     }
 
+    public void shuffleQuestions(){
+        Collections.shuffle(poolQuestion);
+    }
+
     private void mockData(){
-        poolQuestion.add(new Question("Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("Ile sekund to 5 minut?", "300", "60", "40","180"));
+        poolQuestion.add(new Question("1.Ile sekund to 5 minut?", "300", "60", "40","180"));
+        poolQuestion.add(new Question("2.Ile sekund to 5 minut?", "300", "60", "40","180"));
+        poolQuestion.add(new Question("3.Ile sekund to 5 minut?", "300", "60", "40","180"));
+        poolQuestion.add(new Question("4.Ile sekund to 5 minut?", "300", "60", "40","180"));
+        poolQuestion.add(new Question("5.Ile sekund to 5 minut?", "300", "60", "40","180"));
+        poolQuestion.add(new Question("6.Ile sekund to 5 minut?", "300", "60", "40","180"));
+        poolQuestion.add(new Question("7.Ile sekund to 5 minut?", "300", "60", "40","180"));
+        poolQuestion.add(new Question("8.Ile sekund to 5 minut?", "300", "60", "40","180"));
+        poolQuestion.add(new Question("9.Ile sekund to 5 minut?", "300", "60", "40","180"));
+        poolQuestion.add(new Question("10.Ile sekund to 5 minut?", "300", "60", "40","180"));
+        poolQuestion.add(new Question("11.Ile sekund to 5 minut?", "300", "60", "40","180"));
+        poolQuestion.add(new Question("12.Ile sekund to 5 minut?", "300", "60", "40","180"));
     }
 }
