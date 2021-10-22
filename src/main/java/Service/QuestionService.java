@@ -42,17 +42,17 @@ public class QuestionService {
     }
 
     private void mockData(){
-        poolQuestion.add(new Question("1.Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("2.Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("3.Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("4.Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("5.Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("6.Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("7.Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("8.Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("9.Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("10.Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("11.Ile sekund to 5 minut?", "300", "60", "40","180"));
-        poolQuestion.add(new Question("12.Ile sekund to 5 minut?", "300", "60", "40","180"));
+        poolQuestion.add(new Question("How many months is the quarter?", "Three", "Two", "Five","Once"));
+        poolQuestion.add(new Question("When we celebrate women's day?", "8 March", "1st of June", "14 June","8 May"));
+        poolQuestion.add(new Question("How many countries borders Poland", "Seven", "Six", "Nine","Five"));
+        poolQuestion.add(new Question("How many oceans the equator passes through?", "Three", "Two", "Once","Five"));
+        poolQuestion.add(new Question("What is the name of the last letter of the Greek alphabet?", "Omega", "Psi", "Chi","alpha"));
+        poolQuestion.add(new Question("A dish with a strainer for watering plants this?", "Watering can", "Plate", "Mug","Colander"));
+        poolQuestion.add(new Question("The lightest element is?", "Hydrogen", "Oxygen", "Helium","Carbon"));
+        poolQuestion.add(new Question("How many tentacles does an octopus have?", "8", "7", "10","12"));
+        poolQuestion.add(new Question("Gloria from the movie \"Madagascar\" was?", "Hippo", "Lion", "Dog","Zebra"));
+        poolQuestion.add(new Question("When it's Valentine's Day?", "February", "May", "June","March"));
+        poolQuestion.add(new Question("The largest country in the world", "Russia", "USA", "Poland","Brazil"));
+        poolQuestion.add(new Question("The largest desert in the world is?", "Sahara", "Gobi", "Nevada","Mojave"));
     }
 }
