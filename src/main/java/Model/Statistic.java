@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class Statistic {
+public class Statistic implements Comparable<Statistic>{
     private String date;
     private int win;
     private String nick;
@@ -28,4 +28,11 @@ public class Statistic {
         return date;
     }
 
+    @Override
+    public int compareTo(Statistic compareStat) {
+        int compareQuantity = ((Statistic) compareStat).getWin();
+
+        //ascending order
+        return compareQuantity - this.getWin();
+    }
 }

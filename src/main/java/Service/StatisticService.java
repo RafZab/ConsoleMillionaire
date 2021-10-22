@@ -3,11 +3,14 @@ package Service;
 import Model.Statistic;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class StatisticService {
     private ArrayList<Statistic> statistics = new ArrayList<>();
 
     public ArrayList<Statistic> getStatistics(){
+        Collections.sort(statistics);
         return statistics;
     }
 
