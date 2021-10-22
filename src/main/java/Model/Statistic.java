@@ -1,14 +1,17 @@
 package Model;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class Statistic {
-    private Date date;
+    private String date;
     private int win;
     private String nick;
 
     public Statistic(String nick, int win){
-        this.date = new Date();
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        this.date = fmt.format(LocalDateTime.now());
         this.win = win;
         this.nick = nick;
     }
@@ -21,7 +24,7 @@ public class Statistic {
         return win;
     }
 
-    public Date getDate(){
+    public String getDate(){
         return date;
     }
 

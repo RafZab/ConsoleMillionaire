@@ -1,3 +1,4 @@
+import Model.Statistic;
 import Service.GameSerive;
 import Service.QuestionService;
 import com.googlecode.lanterna.TerminalSize;
@@ -145,22 +146,27 @@ public class App {
     }
 
     public void showStatistics(){
-        //List<AttemptEntry> userStats = gameManager.getUserStats(user.getUsername());
+        ArrayList<Statistic> statistics = gameSerive.getStatistics();
 
         Panel panel = new Panel();
         Table<String> table = new Table<>("Number", "Nick", "Prize", "Date");
 
         for(int i = 0; i < 10; i++){
-            table.getTableModel().addRow(Integer.toString(i+1), "","","");
+            if(statistics.size() <= i){
+                table.getTableModel().addRow(Integer.toString(i+1), "","","");
+            } else {
+                table.getTableModel().addRow(Integer.toString(i+1), statistics.get(i).getNick() ,Integer.toString(statistics.get(i).getWin()), statistics.get(i).getDate());
+            }
         }
-//        userStats
-//                .forEach(attemptEntry -> table.getTableModel().addRow(user.getNick(), attemptEntry.getPrize().toString(), attemptEntry.getDate().toString()));
         panel.addComponent(table);
 
         Panel panelToButton = new Panel();
         panelToButton.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
 
-        panelToButton.addComponent(new EmptySpace(new TerminalSize(7, 0)));
+        if(statistics.size() == 0)
+            panelToButton.addComponent(new EmptySpace(new TerminalSize(7, 0)));
+        else
+            panelToButton.addComponent(new EmptySpace(new TerminalSize(13, 0)));
         Button okButton = new Button("OK", this::showMainMenu).addTo(panelToButton);
 
         panel.addComponent(panelToButton);
@@ -257,6 +263,7 @@ public class App {
 
     private void endGame(){
         if(questionCount == 0) {
+            gameSerive.addStatistic(0);
             winnerInfo(0);
         }else {
             int win = gameSerive.getWinner(questionCount -1);

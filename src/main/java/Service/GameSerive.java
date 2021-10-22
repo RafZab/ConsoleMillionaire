@@ -1,6 +1,7 @@
 package Service;
 
 import Model.Question;
+import Model.Statistic;
 import Model.User;
 
 import java.util.ArrayList;
@@ -8,15 +9,21 @@ import java.util.ArrayList;
 public class GameSerive {
     private QuestionService questionService;
     private PrizeService prizeService;
+    private StatisticService statisticService;
     private User user;
 
     public GameSerive(){
         questionService = new QuestionService();
         prizeService = new PrizeService();
+        statisticService = new StatisticService();
     }
 
     public void setUser(String nick){
         this.user = new User(nick);
+    }
+
+    public ArrayList<Statistic> getStatistics(){
+        return statisticService.getStatistics();
     }
 
     public void addQuestion(String question, String correctAnswer, String incorrectAnswer1, String incorrectAnswer2, String incorrectAnswer3){
@@ -41,20 +48,33 @@ public class GameSerive {
 
     public int getLoseWinner(int numberQuestion){
         if(numberQuestion >= 11){
-            return getWinner(11);
+            int win = getWinner(11);
+            addStatistic(win);
+            return win;
         }
         else if(numberQuestion >= 6){
-            return getWinner(6);
+            int win = getWinner(6);
+            addStatistic(win);
+            return win;
         }
         else if(numberQuestion >= 1){
-            return getWinner(1);
+            int win = getWinner(1);
+            addStatistic(win);
+            return win;
         } else {
+            addStatistic(0);
             return 0;
         }
     }
 
     public int getWinner(int numberQuestion){
-        return prizeService.getWinner(numberQuestion);
+        int win = prizeService.getWinner(numberQuestion);
+        addStatistic(win);
+        return win;
+    }
+
+    public void addStatistic(int win){
+        statisticService.addToStatistic(getNick(), win);
     }
 
     public String getNick(){
