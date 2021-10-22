@@ -6,6 +6,7 @@ import com.googlecode.lanterna.gui2.*;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogBuilder;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogButton;
 import com.googlecode.lanterna.gui2.dialogs.TextInputDialogBuilder;
+import com.googlecode.lanterna.gui2.table.Table;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import org.ietf.jgss.GSSContext;
@@ -56,11 +57,12 @@ public class App {
     }
 
     private void authUser(String nick){
-        if(!nick.isEmpty()){
-            gameSerive.setUser(nick);
+        String checkNick = nick.trim();
+        if(!checkNick.isEmpty()){
+            gameSerive.setUser(checkNick);
             new MessageDialogBuilder()
                     .setTitle("Welcome")
-                    .setText("Welcome " + nick + " in Millionaire game!")
+                    .setText("Good luck " + checkNick + " in Millionaire game!")
                     .addButton(MessageDialogButton.Continue)
                     .build()
                     .showDialog(textGUI);
@@ -114,7 +116,7 @@ public class App {
 
         panelStatistics.addComponent(new Label("                      "));
         Button statisticsButton = new Button("STATISTICS");
-        //statisticsButton.addListener(button -> showStatistics());
+        statisticsButton.addListener(button -> showStatistics());
         panelStatistics.addComponent(statisticsButton);
 
         panel.addComponent(panelStatistics);
@@ -139,6 +141,29 @@ public class App {
 
         panel.addComponent(panelClose);
 
+        window.setComponent(panel);
+    }
+
+    public void showStatistics(){
+        //List<AttemptEntry> userStats = gameManager.getUserStats(user.getUsername());
+
+        Panel panel = new Panel();
+        Table<String> table = new Table<>("Number", "Nick", "Prize", "Date");
+
+        for(int i = 0; i < 10; i++){
+            table.getTableModel().addRow(Integer.toString(i+1), "","","");
+        }
+//        userStats
+//                .forEach(attemptEntry -> table.getTableModel().addRow(user.getNick(), attemptEntry.getPrize().toString(), attemptEntry.getDate().toString()));
+        panel.addComponent(table);
+
+        Panel panelToButton = new Panel();
+        panelToButton.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
+
+        panelToButton.addComponent(new EmptySpace(new TerminalSize(7, 0)));
+        Button okButton = new Button("OK", this::showMainMenu).addTo(panelToButton);
+
+        panel.addComponent(panelToButton);
         window.setComponent(panel);
     }
 

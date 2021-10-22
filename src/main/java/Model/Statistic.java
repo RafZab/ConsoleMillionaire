@@ -13,4 +13,16 @@ public class Statistic {
         this.nick = nick;
     }
 
+    public String getNick(){
+        return nick;
+    }
+
+    public int getWin(){
+        return win;
+    }
+
+    public Date getDate(){
+        return date;
+    }
+
 }
