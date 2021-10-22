@@ -32,6 +32,11 @@ public class QuestionService {
         return  question.getQuestion();
     }
 
+    public String getCorrectAnswer(int numberQuestion){
+        Question question = poolQuestion.get(numberQuestion);
+        return question.getCorrectAnswer();
+    }
+
     public void shuffleQuestions(){
         Collections.shuffle(poolQuestion);
     }

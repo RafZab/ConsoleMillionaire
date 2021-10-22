@@ -144,18 +144,91 @@ public class App {
         panelToButton.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
 
         Button submit = new Button("Submit");
-       // submit.addListener(button -> processAnswer(radioBoxList.getCheckedItem()));
+       submit.addListener(button -> checkAnswer(radioBoxList.getCheckedItem()));
         panelToButton.addComponent(submit);
 
         panelToButton.addComponent(new Label("      "));
 
         Button end = new Button("End game");
-        // submit.addListener(button -> processAnswer(radioBoxList.getCheckedItem()));
+        end.addListener(button -> endGame());
         panelToButton.addComponent(end);
 
         panel.addComponent(panelToButton);
 
         window.setHints(Collections.singletonList(Window.Hint.CENTERED));
+        window.setComponent(panel);
+    }
+
+    private void checkAnswer(String answer){
+        if(gameSerive.getCorrectAnswer(questionCount).equals(answer)){
+            if(questionCount < 11){
+                questionCount++;
+                new MessageDialogBuilder()
+                        .setTitle("Success")
+                        .setText("Correct answer! Continue to next question :)")
+                        .addButton(MessageDialogButton.OK)
+                        .build()
+                        .showDialog(textGUI);
+                playGame();
+            } else {
+                new MessageDialogBuilder()
+                        .setTitle("Congratulations!")
+                        .setText("You are the winner!")
+                        .addButton(MessageDialogButton.OK)
+                        .build()
+                        .showDialog(textGUI);
+                questionCount++;
+                endGame();
+            }
+        } else {
+            new MessageDialogBuilder()
+                    .setTitle("Wrong")
+                    .setText("Wrong answer. End game :(")
+                    .addButton(MessageDialogButton.OK)
+                    .build()
+                    .showDialog(textGUI);
+            loseGame();
+        }
+    }
+
+    private void endGame(){
+        if(questionCount == 0) {
+            winnerInfo(0);
+        }else {
+            int win = gameSerive.getWinner(questionCount -1);
+            winnerInfo(win);
+        }
+    }
+
+    private void loseGame(){
+        int win = gameSerive.getLoseWinner(questionCount - 1);
+        winnerInfo(win);
+    }
+
+    private void winnerInfo(int win) {
+        Panel panel = new Panel();
+
+        panel.addComponent(new EmptySpace(new TerminalSize(0, 1)));
+        Label title = new Label("Congratulations, " + gameSerive.getNick() + "!");
+        Label winner = new Label("You winner " + win + " PLN!");
+
+        panel.addComponent(title);
+        panel.addComponent(new EmptySpace(new TerminalSize(0, 1)));
+        panel.addComponent(winner);
+
+        Panel panelToButton = new Panel();
+        panelToButton.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
+
+        Button ok = new Button("OK");
+        ok.addListener(button -> {
+            showMainMenu();
+            questionCount = 0;
+        });
+        panelToButton.addComponent(new Label("             "));
+        panelToButton.addComponent(ok);
+
+        panel.addComponent(new EmptySpace(new TerminalSize(0, 2)));
+        panel.addComponent(panelToButton);
         window.setComponent(panel);
     }
 
