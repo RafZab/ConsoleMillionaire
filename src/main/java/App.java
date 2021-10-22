@@ -5,6 +5,7 @@ import com.googlecode.lanterna.TextCharacter;
 import com.googlecode.lanterna.gui2.*;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogBuilder;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogButton;
+import com.googlecode.lanterna.gui2.dialogs.TextInputDialogBuilder;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import org.ietf.jgss.GSSContext;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class App {
     private Window window;
@@ -24,12 +26,53 @@ public class App {
     private int questionCount = 0;
 
     private void welcomeDialog() {
-        new MessageDialogBuilder()
-                .setTitle("Welcome")
-                .setText("Welcome in Millionaire Quiz!")
-                .addButton(MessageDialogButton.Continue)
-                .build()
-                .showDialog(textGUI);
+        window.setHints(Collections.singletonList(Window.Hint.CENTERED));
+
+        Panel panel = new Panel();
+        panel.withBorder(Borders.singleLine("Welcome"));
+
+        panel.addComponent(new EmptySpace(new TerminalSize(0, 1)));
+        panel.addComponent(new Label("Welcome in Millionaire Quiz!"));
+        panel.addComponent(new EmptySpace(new TerminalSize(0, 2)));
+
+        panel.addComponent(new Label("Enter nickname:"));
+        TextBox nick = new TextBox().addTo(panel);
+        panel.addComponent(new EmptySpace(new TerminalSize(0, 1)));
+
+
+        Panel panelToButton = new Panel();
+        panelToButton.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
+        panelToButton.addComponent(new EmptySpace(new TerminalSize(6, 0)));
+
+        Button okButton = new Button("Continue", () -> {authUser(nick.getText());}).addTo(panelToButton);
+
+        panelToButton.addComponent(new EmptySpace(new TerminalSize(0, 1)));
+
+        Button exitButton = new Button("CLOSE", this::handleClose).addTo(panelToButton);
+
+        panel.addComponent(panelToButton);
+
+        window.setComponent(panel);
+    }
+
+    private void authUser(String nick){
+        if(!nick.isEmpty()){
+            gameSerive.setUser(nick);
+            new MessageDialogBuilder()
+                    .setTitle("Welcome")
+                    .setText("Welcome " + nick + " in Millionaire game!")
+                    .addButton(MessageDialogButton.Continue)
+                    .build()
+                    .showDialog(textGUI);
+            showMainMenu();
+        } else {
+            new MessageDialogBuilder()
+                    .setTitle("Fail")
+                    .setText("Enter your nick!")
+                    .addButton(MessageDialogButton.Continue)
+                    .build()
+                    .showDialog(textGUI);
+        }
     }
 
     private void setUpWindow() throws IOException {
@@ -41,10 +84,6 @@ public class App {
         textGUI = new MultiWindowTextGUI(screen);
 
         window = new BasicWindow("Millionaire Quiz");
-    }
-
-    private void showLogin() {
-
     }
 
     private void showMainMenu() {
@@ -300,8 +339,6 @@ public class App {
             setUpWindow();
 
             welcomeDialog();
-
-            showMainMenu();
 
             textGUI.addWindowAndWait(window);
         } catch (IOException e) {

@@ -13,7 +13,10 @@ public class GameSerive {
     public GameSerive(){
         questionService = new QuestionService();
         prizeService = new PrizeService();
-        user = new User("Gosia");
+    }
+
+    public void setUser(String nick){
+        this.user = new User(nick);
     }
 
     public void addQuestion(String question, String correctAnswer, String incorrectAnswer1, String incorrectAnswer2, String incorrectAnswer3){
