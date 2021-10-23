@@ -3,6 +3,7 @@ import Service.GameSerive;
 import Service.QuestionService;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.gui2.*;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogBuilder;
 import com.googlecode.lanterna.gui2.dialogs.MessageDialogButton;
@@ -179,9 +180,9 @@ public class App {
     }
 
     private void playGame(){
-        Panel panel = new Panel();
+        Panel panelMain = new Panel();
 
-        panel.addComponent(new EmptySpace(new TerminalSize(0, 1)));
+        panelMain.addComponent(new EmptySpace(new TerminalSize(0, 1)));
 
         Label logo = new Label("███╗   ███╗██╗██╗     ██╗     ██╗ ██████╗ ███╗   ██╗ █████╗ ██╗██████╗ ███████╗\n" +
                 "████╗ ████║██║██║     ██║     ██║██╔═══██╗████╗  ██║██╔══██╗██║██╔══██╗██╔════╝\n" +
@@ -190,12 +191,20 @@ public class App {
                 "██║ ╚═╝ ██║██║███████╗███████╗██║╚██████╔╝██║ ╚████║██║  ██║██║██║  ██║███████╗\n" +
                 "╚═╝     ╚═╝╚═╝╚══════╝╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚══════╝\n" +
                 "                                                                               ");
-        panel.addComponent(logo);
+        panelMain.addComponent(logo);
 
-        panel.addComponent(new EmptySpace(new TerminalSize(0, 2)));
+        panelMain.addComponent(new EmptySpace(new TerminalSize(0, 2)));
 
+        Panel panel = new Panel();
+
+        Panel questionPanel = new Panel();
+        questionPanel.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
+
+        questionPanel.addComponent(new EmptySpace(new TerminalSize(16, 0)));
         Label questionTitle = new Label("Question number " + (questionCount + 1));
-        panel.addComponent(questionTitle);
+        questionPanel.addComponent(questionTitle);
+
+        panel.addComponent(questionPanel);
 
         panel.addComponent(new EmptySpace(new TerminalSize(0, 1)));
 
@@ -212,7 +221,7 @@ public class App {
 
         Panel panelToButton = new Panel();
         panelToButton.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
-
+        panelToButton.addComponent(new Label("          "));
         Button submit = new Button("Submit");
        submit.addListener(button -> checkAnswer(radioBoxList.getCheckedItem()));
         panelToButton.addComponent(submit);
@@ -223,10 +232,35 @@ public class App {
         end.addListener(button -> endGame());
         panelToButton.addComponent(end);
 
+        panelToButton.addComponent(new EmptySpace(new TerminalSize(1, 1)));
         panel.addComponent(panelToButton);
 
+//        right Panel
+
+        Panel rightPanel = new Panel();
+
+        rightPanel.addComponent(new EmptySpace(new TerminalSize(4, 4)));
+
+        Panel textPanel = new Panel();
+        textPanel.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
+
+        textPanel.addComponent(new Label("You play for"));
+        textPanel.addComponent(new Label(gameSerive.getPrize(questionCount) + " PLN!").setForegroundColor(TextColor.ANSI.RED));
+
+        rightPanel.addComponent(textPanel);
+        rightPanel.addComponent(new EmptySpace(new TerminalSize(1, 1)));
+
+        rightPanel.addComponent(new Label("Your guaranteed amount"));
+        rightPanel.addComponent(new Label("is " + gameSerive.getgGuaranteedPrize(questionCount - 1) + " PLN!").setForegroundColor(TextColor.ANSI.GREEN));
+
+        Panel twoMenuPanel = new Panel();
+        twoMenuPanel.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
+        twoMenuPanel.addComponent(panel);
+        twoMenuPanel.addComponent(rightPanel);
+
+        panelMain.addComponent(twoMenuPanel);
         window.setHints(Collections.singletonList(Window.Hint.CENTERED));
-        window.setComponent(panel);
+        window.setComponent(panelMain);
     }
 
     private void checkAnswer(String answer){

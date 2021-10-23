@@ -46,6 +46,23 @@ public class GameSerive {
         return questionService.getCorrectAnswer(numberQuestion);
     }
 
+    public int getPrize(int numberQuestion){
+        return prizeService.getWinner(numberQuestion);
+    }
+
+    public int getgGuaranteedPrize(int numberQuestion){
+        if(numberQuestion >= 11){
+            return getWinner(11);
+        }
+        else if(numberQuestion >= 6){
+            return getWinner(6);
+        }
+        else if(numberQuestion >= 1){
+            return getWinner(1);
+        } else {
+            return 0;
+        }
+    }
     public int getLoseWinner(int numberQuestion){
         if(numberQuestion >= 11){
             int win = getWinner(11);
