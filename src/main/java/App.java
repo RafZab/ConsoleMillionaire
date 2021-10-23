@@ -250,6 +250,15 @@ public class App {
         rightPanel.addComponent(textPanel);
         rightPanel.addComponent(new EmptySpace(new TerminalSize(1, 1)));
 
+        Panel textWinPanel = new Panel();
+        textWinPanel.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
+
+        textWinPanel.addComponent(new Label("You won"));
+        textWinPanel.addComponent(new Label(gameSerive.getPrize(questionCount - 1) + " PLN!").setForegroundColor(TextColor.ANSI.YELLOW));
+
+        rightPanel.addComponent(textWinPanel);
+        rightPanel.addComponent(new EmptySpace(new TerminalSize(1, 1)));
+
         rightPanel.addComponent(new Label("Your guaranteed amount"));
         rightPanel.addComponent(new Label("is " + gameSerive.getgGuaranteedPrize(questionCount - 1) + " PLN!").setForegroundColor(TextColor.ANSI.GREEN));
 
