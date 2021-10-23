@@ -52,6 +52,19 @@ public class GameSerive {
 
     public int getgGuaranteedPrize(int numberQuestion){
         if(numberQuestion >= 11){
+            return prizeService.getWinner(11);
+        }
+        else if(numberQuestion >= 6){
+            return prizeService.getWinner(6);
+        }
+        else if(numberQuestion >= 1){
+            return prizeService.getWinner(1);
+        } else {
+            return 0;
+        }
+    }
+    public int getLoseWinner(int numberQuestion){
+        if(numberQuestion >= 11){
             return getWinner(11);
         }
         else if(numberQuestion >= 6){
@@ -59,25 +72,6 @@ public class GameSerive {
         }
         else if(numberQuestion >= 1){
             return getWinner(1);
-        } else {
-            return 0;
-        }
-    }
-    public int getLoseWinner(int numberQuestion){
-        if(numberQuestion >= 11){
-            int win = getWinner(11);
-            addStatistic(win);
-            return win;
-        }
-        else if(numberQuestion >= 6){
-            int win = getWinner(6);
-            addStatistic(win);
-            return win;
-        }
-        else if(numberQuestion >= 1){
-            int win = getWinner(1);
-            addStatistic(win);
-            return win;
         } else {
             addStatistic(0);
             return 0;
