@@ -194,7 +194,6 @@ public class App {
         panelMain.addComponent(logo);
 
         panelMain.addComponent(new EmptySpace(new TerminalSize(0, 2)));
-
         Panel panel = new Panel();
 
         Panel questionPanel = new Panel();
@@ -272,6 +271,98 @@ public class App {
         window.setComponent(panelMain);
     }
 
+    private AnimatedLabel getFirework(){
+        AnimatedLabel firework = new AnimatedLabel("\n" + "\n"+ "\n"+ "\n"+ "\n"+ "\n"+ "\n"+ "\n"+ "\n"+ "\n"+ "\n"+ "\n" + "\n" + "\n" + "\n" + "\n" +
+                "           _ \n" +
+                "          | |\n" +
+                "          | |\n" +
+                "          | |\n" +
+                "          |_|");
+
+        firework.addFrame( "\n" + "\n"+ "\n"+ "\n"+ "\n"+ "\n"+ "\n"+ "\n"+ "\n"+ "\n"+ "\n" +
+                "           _ \n" +
+                "          | |\n" +
+                "          | |\n" +
+                "          | |\n" +
+                "          |_|\n" +
+                "          | |\n" +
+                "          | |\n" +
+                "          | |\n" +
+                "          |_|");
+
+        firework.addFrame( "\n" + "\n"+ "\n"+ "\n"+ "\n"+ "\n"+ "\n"+ "\n"+
+                "                  \n" +
+                "      _/\\__/\\__/\\_\n" +
+                "      >  <>  <>  <\n" +
+                "       \\/  \\/  \\/ \n" +
+                "          | |     \n" +
+                "          | |     \n" +
+                "          | |     \n" +
+                "          |_|     \n" +
+                "          | |     \n" +
+                "          | |     \n" +
+                "          | |     \n" +
+                "          |_|     ");
+
+        firework.addFrame( "\n" + "\n"+ "\n"+ "\n"+
+                "                     \n" +
+                "  _/\\__/\\__/\\__/\\__/\\_\n" +
+                "  >  <>  <>  <>  <>  <\n" +
+                "   \\/  \\/  \\/  \\/  \\/ \n" +
+                "      _/\\__/\\__/\\_    \n" +
+                "      >  <>  <>  <    \n" +
+                "       \\/  \\/  \\/     \n" +
+                "          | |         \n" +
+                "          | |         \n" +
+                "          | |         \n" +
+                "          |_|         \n" +
+                "          | |         \n" +
+                "          | |         \n" +
+                "          | |         \n" +
+                "          |_|         ");
+
+        firework.addFrame("\n"+ "\n"+
+                "                      \n" +
+                "    _/\\__/\\__/\\__/\\_  \n" +
+                "    >  <>  <>  <>  <  \n" +
+                "  _/\\\\//\\\\//\\\\//\\\\//\\_\n" +
+                "  >  <>  <>  <>  <>  <\n" +
+                "   \\/  \\/  \\/  \\/  \\/ \n" +
+                "      _/\\__/\\__/\\_    \n" +
+                "      >  <>  <>  <    \n" +
+                "       \\/  \\/  \\/     \n" +
+                "          | |         \n" +
+                "          | |         \n" +
+                "          | |         \n" +
+                "          |_|         \n" +
+                "          | |         \n" +
+                "          | |         \n" +
+                "          | |         \n" +
+                "          |_|         ");
+
+        firework.addFrame("                      \n" +
+                "      _/\\__/\\__/\\_    \n" +
+                "      >  <>  <>  <    \n" +
+                "    _/\\\\//\\\\//\\\\//\\_  \n" +
+                "    >  <>  <>  <>  <  \n" +
+                "  _/\\\\//\\\\//\\\\//\\\\//\\_\n" +
+                "  >  <>  <>  <>  <>  <\n" +
+                "   \\/  \\/  \\/  \\/  \\/ \n" +
+                "      _/\\__/\\__/\\_    \n" +
+                "      >  <>  <>  <    \n" +
+                "       \\/  \\/  \\/     \n" +
+                "          | |         \n" +
+                "          | |         \n" +
+                "          | |         \n" +
+                "          |_|         \n" +
+                "          | |         \n" +
+                "          | |         \n" +
+                "          | |         \n" +
+                "          |_|         ");
+        firework.startAnimation(200);
+        return  firework;
+    }
+
     private void checkAnswer(String answer){
         if(gameSerive.getCorrectAnswer(questionCount).equals(answer)){
             if(questionCount < 11){
@@ -320,11 +411,16 @@ public class App {
     }
 
     private void winnerInfo(int win) {
+
+        Panel mainPanel = new Panel();
+        mainPanel.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
+        mainPanel.addComponent(getFirework());
+
         Panel panel = new Panel();
 
-        panel.addComponent(new EmptySpace(new TerminalSize(0, 1)));
-        Label title = new Label("Congratulations, " + gameSerive.getNick() + "!");
-        Label winner = new Label("You winner " + win + " PLN!");
+        panel.addComponent(new EmptySpace(new TerminalSize(0, 10)));
+        Label title = new Label("Congratulations, " + gameSerive.getNick() + "!").setForegroundColor(TextColor.ANSI.GREEN);
+        Label winner = new Label("You winner " + win + " PLN!").setForegroundColor(TextColor.ANSI.GREEN);
 
         panel.addComponent(title);
         panel.addComponent(new EmptySpace(new TerminalSize(0, 1)));
@@ -343,7 +439,10 @@ public class App {
 
         panel.addComponent(new EmptySpace(new TerminalSize(0, 2)));
         panel.addComponent(panelToButton);
-        window.setComponent(panel);
+
+        mainPanel.addComponent(panel);
+        mainPanel.addComponent(getFirework());
+        window.setComponent(mainPanel);
     }
 
     private void showAddQuestionForm() {

@@ -1,0 +1,8 @@
+Model\Question.class
+Model\User.class
+App.class
+Model\Statistic.class
+Service\GameSerive.class
+Service\QuestionService.class
+Service\PrizeService.class
+Service\StatisticService.class
