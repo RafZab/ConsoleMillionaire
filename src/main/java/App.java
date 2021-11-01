@@ -1,5 +1,6 @@
 import Model.Statistic;
 import Service.GameSerive;
+import Service.MusicPlayer;
 import Service.QuestionService;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextCharacter;
@@ -11,6 +12,7 @@ import com.googlecode.lanterna.gui2.dialogs.TextInputDialogBuilder;
 import com.googlecode.lanterna.gui2.table.Table;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import javazoom.jl.decoder.JavaLayerException;
 import org.ietf.jgss.GSSContext;
 
 import java.io.Console;
@@ -24,6 +26,7 @@ public class App {
     private Window window;
     private WindowBasedTextGUI textGUI;
     private GameSerive gameSerive = new GameSerive();
+    private MusicPlayer musicPlayer = new MusicPlayer();
     Screen screen;
 
     private int questionCount = 0;
@@ -108,7 +111,13 @@ public class App {
 
         panelPlay.addComponent(new Label("                        "));
         Button playButton = new Button("PLAY");
-        playButton.addListener(button -> startPlayGame());
+        playButton.addListener(button -> {
+            try {
+                startPlayGame();
+            } catch (JavaLayerException e) {
+                e.printStackTrace();
+            }
+        });
         panelPlay.addComponent(playButton);
 
         panel.addComponent(panelPlay);
@@ -174,12 +183,13 @@ public class App {
         window.setComponent(panel);
     }
 
-    private void startPlayGame(){
+    private void startPlayGame() throws JavaLayerException {
         gameSerive.shuffleQuestions();
         playGame();
     }
 
-    private void playGame(){
+    private void playGame() throws JavaLayerException {
+        musicPlayer.play("/mp3/Correct.mp3");
         Panel panelMain = new Panel();
 
         panelMain.addComponent(new EmptySpace(new TerminalSize(0, 1)));
@@ -222,13 +232,25 @@ public class App {
         panelToButton.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
         panelToButton.addComponent(new Label("          "));
         Button submit = new Button("Submit");
-       submit.addListener(button -> checkAnswer(radioBoxList.getCheckedItem()));
+       submit.addListener(button -> {
+           try {
+               checkAnswer(radioBoxList.getCheckedItem());
+           } catch (JavaLayerException e) {
+               e.printStackTrace();
+           }
+       });
         panelToButton.addComponent(submit);
 
         panelToButton.addComponent(new Label("      "));
 
         Button end = new Button("End game");
-        end.addListener(button -> endGame());
+        end.addListener(button -> {
+            try {
+                endGame();
+            } catch (JavaLayerException e) {
+                e.printStackTrace();
+            }
+        });
         panelToButton.addComponent(end);
 
         panelToButton.addComponent(new EmptySpace(new TerminalSize(1, 1)));
@@ -363,7 +385,7 @@ public class App {
         return  firework;
     }
 
-    private void checkAnswer(String answer){
+    private void checkAnswer(String answer) throws JavaLayerException {
         if(gameSerive.getCorrectAnswer(questionCount).equals(answer)){
             if(questionCount < 11){
                 questionCount++;
@@ -395,7 +417,7 @@ public class App {
         }
     }
 
-    private void endGame(){
+    private void endGame() throws JavaLayerException {
         if(questionCount == 0) {
             gameSerive.addStatistic(0);
             winnerInfo(0);
@@ -405,13 +427,13 @@ public class App {
         }
     }
 
-    private void loseGame(){
+    private void loseGame() throws JavaLayerException {
         int win = gameSerive.getLoseWinner(questionCount - 1);
         winnerInfo(win);
     }
 
-    private void winnerInfo(int win) {
-
+    private void winnerInfo(int win) throws JavaLayerException {
+        musicPlayer.play("/mp3/Over.mp3");
         Panel mainPanel = new Panel();
         mainPanel.setLayoutManager(new LinearLayout(Direction.HORIZONTAL));
         mainPanel.addComponent(getFirework());

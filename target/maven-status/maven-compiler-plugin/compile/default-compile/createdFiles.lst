@@ -1,5 +1,6 @@
 Model\Question.class
 Model\User.class
+Service\MusicPlayer.class
 App.class
 Model\Statistic.class
 Service\GameSerive.class
