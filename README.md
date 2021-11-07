@@ -3,6 +3,7 @@
 ## Table of contents
 * [General info](#main-assumptions)
 * [Description of functionality](#description-of-functionality)
+* [How to install](#how-to-install)
 * [Technologies](#technologies)
 * [User manual](#user-manual)
 * [Photos](#photos)
