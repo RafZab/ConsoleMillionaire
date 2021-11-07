@@ -26,10 +26,15 @@ to try our hand at this game.
       - Before we go to the main menu of the game, we need to enter your username so that we can address the user by name, for the better experience users.
   6. Disabling the application
       - After pressing the "Close" button, the game shuts down.
-   
+
+## How to install:
+Download <a href="https://megawrzuta.pl/download/27a42edb7dadd4cf515b2d61f684e410.html" target="_blank">ConsoleMillionaire.jar</a> and open it with java.
+
+
 ## Technologies
 - Java version 16
 - Lanterna version 3.1.1
+- Jlayer version 1.0.1
 
 ## User manual
 After starting the application, move the arrows on the keyboard, when want to accept something, click enter.
