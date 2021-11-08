@@ -6,6 +6,7 @@
 * [How to install](#how-to-install)
 * [Technologies](#technologies)
 * [User manual](#user-manual)
+* [Rate](#rate)
 * [Photos](#photos)
 * [License](#license)
 
@@ -39,6 +40,10 @@ Download <a href="https://megawrzuta.pl/download/27a42edb7dadd4cf515b2d61f684e41
 
 ## User manual
 After starting the application, move the arrows on the keyboard, when want to accept something, click enter.
+
+## Rate
+The game I created has a great potential for development. I like it visually and I would recommend it 
+to my friends and lost a lot of time in it expanding my knowledge in a nice and interesting way.
 ## Photos
 
 ![image](https://user-images.githubusercontent.com/65453222/138564484-48a7c031-294d-410a-bbf4-f613adf4531f.png)
